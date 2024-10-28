@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
-from Blip.database import Persona, SessionLocal  
+from database import Persona, SessionLocal  
 from datetime import date
 
 app = FastAPI()
