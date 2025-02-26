@@ -1,0 +1,34 @@
+name: Detect SQL Changes
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "models/marts/**/*.sql"
+  pull_request:
+    branches:
+      - feature/sql-ci-cd
+      - vherrera96/dbt-cloud
+    paths:
+      - "models/marts/**/*.sql" # escucha cambios en .sql en models/marts
+
+jobs:
+  check_sql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get changed SQL files
+        id: changed_files
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
+          else
+            echo "FILES=$(git diff --name-only HEAD~1 HEAD | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
+          fi
+
+      - name: Run SQL table extraction
+        if: env.FILES != ''
+        run: python scripts/extract_tables.py $FILES
