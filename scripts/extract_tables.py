@@ -27,8 +27,9 @@ def main():
             all_tables.update(tables)
 
     output_dir = os.path.abspath("scripts")  # Obtiene la ruta absoluta
-    output_file = "/tmp/detected_tables.txt"
-    os.makedirs(output_dir, exist_ok=True)  # Asegura que la carpeta exista
+
+    output_file = "scripts/detected_tables.txt"
+    os.makedirs("scripts", exist_ok=True)  # Asegurar que la carpeta scripts exista
 
     print(f"Guardando tablas en: {output_file}")  # Imprime la ruta absoluta
 
