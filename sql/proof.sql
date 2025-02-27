@@ -1,5 +1,6 @@
 /*test*/
 
+/*test*/
 
 {{ config(
     materialized='table',
