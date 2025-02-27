@@ -38,3 +38,11 @@ jobs:
         run: python scripts/extract_tables.py $FILES
       - name: List scripts directory
         run: ls -R scripts
+      - name: Agregar y commitear detected_tables.txt
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add scripts/detected_tables.txt
+          git commit -m "Agregar archivo detected_tables.txt desde GitHub Actions"
+          git push origin main
+
