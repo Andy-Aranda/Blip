@@ -1,8 +1,30 @@
-name: hello-world
-on: push
+name: Detect SQL Changes
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - sql/**/*.sql
+  pull_request:
+    branches:
+      - rama2
+    paths:
+      - sql/**/*.sql
 jobs:
-  my-job:
+  check_sql:
     runs-on: ubuntu-latest
     steps:
-      - name: my-step
-        run: echo "Hello World!"
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Get changed SQL files
+        id: changed_files
+        run: >
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
+          else
+            echo "FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
+          fi
+            echo "::set-output name=files::${{ env.FILES }}"
+      - name: Run SQL table extraction
+        if: env.FILES != ''
+        run: python scripts/extract_tables.py $FILES
