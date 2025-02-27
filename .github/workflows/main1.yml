@@ -17,16 +17,22 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Permite acceder a HEAD~1
+          fetch-depth: 0  # Permite acceder a HEAD~1
       - name: Get changed SQL files
         id: changed_files
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
+            BASE_COMMIT=${{ github.event.pull_request.base.sha }}
           else
-            echo "FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
+            BASE_COMMIT=${{ github.event.before }}
           fi
-          echo "FILES=${{ env.FILES }}" >> $GITHUB_ENV
+
+          if [ -z "$BASE_COMMIT" ]; then
+            echo "No previous commit found, skipping diff."
+            echo "FILES=" >> $GITHUB_ENV
+          else
+            echo "FILES=$(git diff --name-only $BASE_COMMIT ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
+          fi
       - name: Run SQL table extraction
         if: env.FILES != ''
         run: python scripts/extract_tables.py $FILES
