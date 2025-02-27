@@ -1,3 +1,6 @@
+/*test*/
+
+
 {{ config(
     materialized='table',
     schema='marts'
