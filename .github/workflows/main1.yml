@@ -20,19 +20,13 @@ jobs:
           fetch-depth: 0  # Permite acceder a HEAD~1
       - name: Get changed SQL files
         id: changed_files
-        run: |
+        run: >
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            BASE_COMMIT=${{ github.event.pull_request.base.sha }}
+            echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
           else
-            BASE_COMMIT=${{ github.event.before }}
+            echo "FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
           fi
-
-          if [ -z "$BASE_COMMIT" ]; then
-            echo "No previous commit found, skipping diff."
-            echo "FILES=" >> $GITHUB_ENV
-          else
-            echo "FILES=$(git diff --name-only $BASE_COMMIT ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
-          fi
+            echo "::set-output name=files::${{ env.FILES }}"
       - name: Run SQL table extraction
         if: env.FILES != ''
         run: python scripts/extract_tables.py $FILES

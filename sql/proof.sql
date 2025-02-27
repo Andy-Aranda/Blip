@@ -14,8 +14,8 @@ WITH business_totals AS (
         b.business_group,
         COUNT(DISTINCT f.member_id) as total_members,
         COUNT(DISTINCT CASE WHEN f.category = 'Maternity Add-On' THEN f.member_id END) as maternity_members
-    FROM {{ ref('fct_healthplan_amendments') }} f
-    JOIN {{ ref('dim_businesses') }} b ON b.id = f.business_id
+    FROM {{ ref('fct_healthplan_amendments') }} f /*tabla 1*/
+    JOIN {{ ref('dim_businesses') }} b ON b.id = f.business_id /*tabla 2*/
     WHERE
         f.is_active = true
     GROUP BY
