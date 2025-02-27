@@ -1,7 +1,7 @@
 /*test*/
 /*test*/
 /*test*/
-/*test*/
+
 
 {{ config(
     materialized='table',
