@@ -27,7 +27,9 @@ def main():
             tables = extract_tables_from_sql(file_path)
             all_tables.update(tables)
 
-    output_file = "scripts/detected_tables.txt"
+    output_dir = "scripts"
+    output_file = os.path.join(output_dir, "detected_tables.txt")
+    os.makedirs(output_dir, exist_ok=True)
     with open(output_file, "w", encoding="utf-8") as f:
         if all_tables:
             f.write("\n".join(sorted(all_tables)))
