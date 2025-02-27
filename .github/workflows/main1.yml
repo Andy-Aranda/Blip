@@ -36,3 +36,7 @@ jobs:
       - name: Run SQL table extraction
         if: env.FILES != ''
         run: python scripts/extract_tables.py $FILES
+      - name: List scripts directory
+        run: ls -R scripts
+      - name: Check temp file
+        run: cat /tmp/detected_tables.txt
