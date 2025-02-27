@@ -22,9 +22,8 @@ jobs:
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
           else
-            echo "FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
+            echo "FILES=$(git diff --name-only HEAD~1 ${{ github.sha }} | grep '\.sql$' | tr '\n' ' ')" >> $GITHUB_ENV
           fi
-            echo "::set-output name=files::${{ env.FILES }}"
       - name: Run SQL table extraction
         if: env.FILES != ''
         run: python scripts/extract_tables.py $FILES
