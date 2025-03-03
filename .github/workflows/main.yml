@@ -37,12 +37,3 @@ jobs:
           git add scripts/detected_tables.txt
           git commit -m "Actualizar detected_tables.txt desde GitHub Actions"
           git push origin ${{ github.head_ref }}
-
-      - name: Crear PR automático
-        if: env.FILES != ''
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: update-detected-tables
-          base: main
-          title: "Actualización automática de detected_tables.txt"
-          body: "Este PR fue creado automáticamente para actualizar detected_tables.txt basado en cambios en archivos SQL."
