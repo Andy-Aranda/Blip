@@ -2,6 +2,8 @@
 /*test*/
 
 
+FROM tabla1 SELECT * ;
+
 
 {{ config(
     materialized='table',
