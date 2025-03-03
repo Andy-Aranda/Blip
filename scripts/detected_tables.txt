@@ -1,4 +1,4 @@
 business_totals
 dim_businesses
 fct_healthplan_amendments
-tabla160
+tabla150
