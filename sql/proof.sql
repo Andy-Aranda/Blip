@@ -1,5 +1,11 @@
 /*test*/
 /*test*/
+<<<<<<< HEAD
+=======
+/*test*/
+/*test*/
+
+>>>>>>> main
 
 
 {{ config(

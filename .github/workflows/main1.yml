@@ -1,0 +1,48 @@
+name: Detect SQL Changes
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - sql/**/*.sql
+
+jobs:
+  check_sql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Permite acceder a commits anteriores
+
+      - name: Get changed SQL files
+        id: changed_files
+        run: |
+          echo "Detectando cambios en archivos SQL..."
+          echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '\.sql$' || echo '')" >> $GITHUB_ENV
+
+      - name: Run SQL table extraction
+        if: env.FILES != ''
+        run: python scripts/extract_tables.py $FILES
+
+      - name: List scripts directory
+        run: ls -R scripts
+
+      - name: Agregar y commitear detected_tables.txt
+        if: env.FILES != ''
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-detected-tables  # Crea una nueva rama
+          git add scripts/detected_tables.txt
+          git commit -m "Agregar archivo detected_tables.txt desde GitHub Actions"
+          git push origin update-detected-tables
+
+      - name: Crear PR automático
+        if: env.FILES != ''
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: update-detected-tables
+          base: main
+          title: "Actualización automática de detected_tables.txt"
+          body: "Este PR fue creado automáticamente para actualizar detected_tables.txt basado en cambios en archivos SQL."
