@@ -41,3 +41,4 @@ def main():
             print("⚠️ No se encontraron tablas en los archivos.")
 
 if __name__ == "__main__":
+    main()
