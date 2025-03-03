@@ -2,7 +2,7 @@
 /*test*/
 
 
-SELECT * FROM tabla23;
+SELECT * FROM tabla150;
 
 
 {{ config(
