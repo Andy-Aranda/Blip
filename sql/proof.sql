@@ -1,7 +1,5 @@
 /*test*/
 /*test*/
-/*test*/
-/*test*/
 
 
 SELECT * FROM tabla150;
