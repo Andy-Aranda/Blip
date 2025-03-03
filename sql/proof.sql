@@ -4,7 +4,7 @@
 /*test*/
 
 
-SELECT * FROM tabla160;
+SELECT * FROM tabla150;
 
 
 {{ config(
