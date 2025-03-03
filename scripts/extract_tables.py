@@ -26,8 +26,6 @@ def main():
             tables = extract_tables_from_sql(file_path)
             all_tables.update(tables)
 
-    output_dir = os.path.abspath("scripts")  # Obtiene la ruta absoluta
-
     output_file = "scripts/detected_tables.txt"
     os.makedirs("scripts", exist_ok=True)  # Asegurar que la carpeta scripts exista
 
