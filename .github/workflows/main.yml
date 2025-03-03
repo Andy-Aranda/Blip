@@ -30,13 +30,13 @@ jobs:
 
       - name: Agregar y commitear detected_tables.txt
         if: env.FILES != ''
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b update-detected-tables  # Crea una nueva rama
-          git add scripts/detected_tables.txt
-          git commit -m "Agregar archivo detected_tables.txt desde GitHub Actions"
-          git push origin update-detected-tables
+          run: |
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git checkout ${{ github.head_ref }}  # Usar la rama del PR
+            git add scripts/detected_tables.txt
+            git commit -m "Actualizar detected_tables.txt desde GitHub Actions"
+            git push origin ${{ github.head_ref }}
 
       - name: Crear PR automático
         if: env.FILES != ''

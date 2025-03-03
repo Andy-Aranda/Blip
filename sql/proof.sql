@@ -1,8 +1,8 @@
 /*test*/
 /*test*/
 /*test*/
-/*test*/
 
+SELECT * FROM tabla23;
 
 
 {{ config(
