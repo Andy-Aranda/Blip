@@ -2,11 +2,11 @@ import os
 import re
 import sys
 
-# Expresión regular para detectar tablas en FROM, JOIN y en dbt {{ ref('tabla') }}
+# regex para detectar tablas en froms, joins y en dbt ({{ ref('tabla') }})
 TABLE_PATTERN = re.compile(r"FROM\s+([\w\.]+)|JOIN\s+([\w\.]+)|ref\(\s*'([\w\.]+)'\s*\)", re.IGNORECASE)
 
 def extract_tables_from_sql(file_path):
-    """Extrae nombres de tablas del archivo SQL, incluyendo dbt ref()"""
+    """Extract names from SQL file, including dbt ref ()"""
     tables = set()
     with open(file_path, "r", encoding="utf-8") as file:
         for line in file:
@@ -28,16 +28,16 @@ def main():
             all_tables.update(tables)
 
     output_file = "scripts/detected_tables.txt"
-    os.makedirs("scripts", exist_ok=True)  # Asegurar que la carpeta scripts exista
+    os.makedirs("scripts", exist_ok=True)
 
-    print(f"Guardando tablas en: {output_file}")  # Imprime la ruta absoluta
+    print(f"Saving tables in: {output_file}")  
 
     with open(output_file, "w", encoding="utf-8") as f:
         if all_tables:
             f.write("\n".join(sorted(all_tables)))
-            print(f"✅ Tablas guardadas en {output_file}")
+            print(f"Tables saved in: {output_file}")
         else:
-            print("⚠️ No se encontraron tablas en los archivos.")
+            print("No tables were found.")
 
 if __name__ == "__main__":
     main()
