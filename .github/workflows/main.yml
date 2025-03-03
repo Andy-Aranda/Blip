@@ -13,22 +13,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Permite acceder a commits anteriores
+          fetch-depth: 0  # accede a commits anteriores
 
       - name: Get changed SQL files
         id: changed_files
         run: |
-          echo "Detectando cambios en archivos SQL..."
+          echo "Changes in SQL..."
           echo "FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '\.sql$' || echo '')" >> $GITHUB_ENV
 
       - name: Run SQL table extraction
         if: env.FILES != ''
         run: python scripts/extract_tables.py $FILES
 
-      - name: List scripts directory
-        run: ls -R scripts
-
-      - name: Agregar y commitear detected_tables.txt
+      - name: Add and commit detected_tables.txt file
         if: env.FILES != ''
         run: |
           git config --global user.name "github-actions[bot]"
