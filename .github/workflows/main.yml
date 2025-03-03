@@ -1,8 +1,8 @@
 name: Detect SQL Changes
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - '**'  # Se ejecuta en cualquier push
     paths:
       - sql/**/*.sql
 
