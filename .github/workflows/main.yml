@@ -42,7 +42,8 @@ jobs:
         if: env.FILES != ''
         uses: peter-evans/create-pull-request@v5
         with:
-          branch: update-detected-tables
           base: main
+          branch: ${{ github.head_ref }} # Usar la rama actual
           title: "Actualización automática de detected_tables.txt"
           body: "Este PR fue creado automáticamente para actualizar detected_tables.txt basado en cambios en archivos SQL."
+          draft: false # Asegura que el PR se cree directamente y no como borrador
