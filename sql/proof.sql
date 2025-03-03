@@ -1,6 +1,6 @@
 /*test*/
 /*test*/
-/*test*/
+
 
 SELECT * FROM tabla23;
 
