@@ -2,8 +2,8 @@ import os
 import re
 import sys
 
-# regex to detect tables in froms, joins and dbt ({{ ref('tabla') }})
-TABLE_PATTERN = re.compile(r"FROM\s+([\w\.]+)|JOIN\s+([\w\.]+)|ref\(\s*'([\w\.]+)'\s*\)", re.IGNORECASE)
+# regex to detect tables in dbt ({{ ref('tabla') }})
+TABLE_PATTERN = re.compile(r"ref\(\s*'([\w\.]+)'\s*\)", re.IGNORECASE)
 
 def extract_tables_from_sql(file_path):
     """Extract names from SQL file, including dbt ref ()"""
@@ -12,9 +12,7 @@ def extract_tables_from_sql(file_path):
         for line in file:
             matches = TABLE_PATTERN.findall(line)
             for match in matches:
-                table_name = match[0] or match[1] or match[2]  # Obtiene la tabla detectada en cualquiera de las 3 opciones
-                if table_name:
-                    tables.add(table_name)
+                tables.add(match)
     return tables
 
 def main():
