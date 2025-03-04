@@ -2,7 +2,7 @@ import os
 import re
 import sys
 
-# regex para detectar tablas en froms, joins y en dbt ({{ ref('tabla') }})
+# regex to detect tables in froms, joins and dbt ({{ ref('tabla') }})
 TABLE_PATTERN = re.compile(r"FROM\s+([\w\.]+)|JOIN\s+([\w\.]+)|ref\(\s*'([\w\.]+)'\s*\)", re.IGNORECASE)
 
 def extract_tables_from_sql(file_path):

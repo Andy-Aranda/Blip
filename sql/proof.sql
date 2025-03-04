@@ -7,6 +7,7 @@
 SELECT * FROM tabla160;
 SELECT * FROM tabla170;
 SELECT * FROM tabla180;
+SELECT * FROM tabla190;
 
 
 {{ config(
