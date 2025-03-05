@@ -1,11 +1,7 @@
 /*test*/
 /*test*/
-/*test*/
-/*test*/
-/*test*/
-/*test*/
-/*test*/
 
+/*prueba*/
 
 SELECT * FROM tabla160;
 SELECT * FROM tabla170;
