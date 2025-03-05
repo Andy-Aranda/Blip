@@ -1,0 +1,3 @@
+# Ignora archivo .env relacionado con contraseñas
+
+.env
