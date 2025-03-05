@@ -1,8 +1,13 @@
 /*test*/
 /*test*/
-/*test*/
-/*test*/
 
+/*prueba*/
+
+SELECT * FROM tabla160;
+SELECT * FROM tabla170;
+SELECT * FROM tabla180;
+SELECT * FROM tabla190;
+SELECT * FROM tabla201;
 
 
 {{ config(
